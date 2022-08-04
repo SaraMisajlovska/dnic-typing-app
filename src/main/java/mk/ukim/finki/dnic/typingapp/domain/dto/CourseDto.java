@@ -1,21 +1,14 @@
-package mk.ukim.finki.dnic.typingapp.domain.models;
+package mk.ukim.finki.dnic.typingapp.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import mk.ukim.finki.dnic.typingapp.domain.enums.Level;
 import mk.ukim.finki.dnic.typingapp.domain.identity.User;
+import mk.ukim.finki.dnic.typingapp.domain.models.Lesson;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity
-public class Course {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class CourseDto {
 
     private String courseName;
 
@@ -25,20 +18,13 @@ public class Course {
 
     private Float progress;
 
-    @Enumerated(EnumType.STRING)
     private Level level;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "course")
     private List<Lesson> lessons;
 
-    @ManyToMany
     private List<User> users;
 
-    public Course() {
-    }
-
-    public Course(String courseName, String description, String imageUrl, Float progress, Level level, List<Lesson> lessons, List<User> users) {
+    public CourseDto(String courseName, String description, String imageUrl, Float progress, Level level, List<Lesson> lessons, List<User> users) {
         this.courseName = courseName;
         this.description = description;
         this.imageUrl = imageUrl;
@@ -48,3 +34,4 @@ public class Course {
         this.users = users;
     }
 }
+

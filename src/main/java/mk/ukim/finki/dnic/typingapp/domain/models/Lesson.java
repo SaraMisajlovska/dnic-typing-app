@@ -1,5 +1,6 @@
 package mk.ukim.finki.dnic.typingapp.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import mk.ukim.finki.dnic.typingapp.domain.enums.Status;
 
@@ -20,6 +21,7 @@ public class Lesson {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonBackReference
     @ManyToOne
     private Course course;
 
