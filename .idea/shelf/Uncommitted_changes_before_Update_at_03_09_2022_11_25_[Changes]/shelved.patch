@@ -1,0 +1,248 @@
+Index: src/main/java/mk/ukim/finki/dnic/typingapp/dataholder/DataInit.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mk.ukim.finki.dnic.typingapp.dataholder;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport mk.ukim.finki.dnic.typingapp.domain.dto.BadgeDto;\r\nimport mk.ukim.finki.dnic.typingapp.domain.dto.CourseDto;\r\nimport mk.ukim.finki.dnic.typingapp.domain.dto.LessonDto;\r\nimport mk.ukim.finki.dnic.typingapp.domain.enums.Level;\r\nimport mk.ukim.finki.dnic.typingapp.domain.enums.Role;\r\nimport mk.ukim.finki.dnic.typingapp.domain.enums.Status;\r\nimport mk.ukim.finki.dnic.typingapp.service.BadgeService;\r\nimport mk.ukim.finki.dnic.typingapp.service.CourseService;\r\nimport mk.ukim.finki.dnic.typingapp.service.LessonService;\r\nimport mk.ukim.finki.dnic.typingapp.service.UserService;\r\nimport org.springframework.stereotype.Component;\r\n\r\nimport javax.annotation.PostConstruct;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\n\r\n@Component\r\n@AllArgsConstructor\r\npublic class DataInit {\r\n\r\n    private final CourseService courseService;\r\n    private final LessonService lessonService;\r\n    private final BadgeService badgeService;\r\n    private final UserService userService;\r\n\r\n    @PostConstruct\r\n    public void initData() {\r\n\r\n        this.badgeService.save(\r\n                new BadgeDto(\"WelcomeBadge\",\r\n                        \"https://www.iconpacks.net/icons/1/free-badge-icon-1361-thumb.png\",\r\n                        \"This is your first badge. Welcome to the course!\",\r\n                        new ArrayList<>()));\r\n        this.userService.register(\"saram\",\r\n                \"sm\",\r\n                \"sm\",\r\n                \"sara\",\r\n                \"misajlovska\",\r\n                \"vs bato\",\r\n                Role.USER);\r\n        this.courseService.save(\r\n                new CourseDto(\"BeginnerCourse\",\r\n                        \"This is a course suitable for beginners.\",\r\n                        \"https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png\",\r\n                        Float.parseFloat(\"0.0\"),\r\n                        Level.LEVEL_1,\r\n                        new ArrayList<>(),\r\n                        List.of(this.userService.findUsers().stream().findFirst().get()))\r\n        );\r\n\r\n        this.lessonService.save(\r\n                new LessonDto(\"Lesson 1: Learn the keys f and j.\",\r\n                        \"ffff jjjj ff jj fff jjj fj fj jjf ffj ff jjj ffj jjf jfjf fffj jjjf ffjj ff jj ffff\",\r\n                        Status.NOT_STARTED,\r\n                        courseService.listCourses().stream().findFirst().get().getId())\r\n        );\r\n\r\n        this.courseService.edit(courseService.listCourses().stream().findFirst().get().getId(),\r\n                new CourseDto(\"BeginnerCourse\",\r\n                        \"This is a course suitable for beginners.\",\r\n                        \"https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png\",\r\n                        Float.parseFloat(\"0.0\"),\r\n                        Level.LEVEL_1,\r\n                        List.of(this.lessonService.listLessons().stream().findFirst().get()),\r\n                        List.of(this.userService.findUsers().stream().findFirst().get())\r\n                )\r\n        );\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/mk/ukim/finki/dnic/typingapp/dataholder/DataInit.java b/src/main/java/mk/ukim/finki/dnic/typingapp/dataholder/DataInit.java
+--- a/src/main/java/mk/ukim/finki/dnic/typingapp/dataholder/DataInit.java	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
++++ b/src/main/java/mk/ukim/finki/dnic/typingapp/dataholder/DataInit.java	(date 1661635183375)
+@@ -43,7 +43,7 @@
+                 "vs bato",
+                 Role.USER);
+         this.courseService.save(
+-                new CourseDto("BeginnerCourse",
++                new CourseDto("Beginner Course",
+                         "This is a course suitable for beginners.",
+                         "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
+                         Float.parseFloat("0.0"),
+@@ -51,6 +51,24 @@
+                         new ArrayList<>(),
+                         List.of(this.userService.findUsers().stream().findFirst().get()))
+         );
++        this.courseService.save(
++                new CourseDto("Intermediate Course",
++                        "This is a course suitable for individuals who know their basics.",
++                        "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
++                        Float.parseFloat("0.0"),
++                        Level.LEVEL_2,
++                        new ArrayList<>(),
++                        List.of(this.userService.findUsers().stream().findFirst().get()))
++        );
++        this.courseService.save(
++                new CourseDto("Advanced Course",
++                        "This is a course suitable for skilled individuals",
++                        "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
++                        Float.parseFloat("0.0"),
++                        Level.LEVEL_3,
++                        new ArrayList<>(),
++                        List.of(this.userService.findUsers().stream().findFirst().get()))
++        );
+ 
+         this.lessonService.save(
+                 new LessonDto("Lesson 1: Learn the keys f and j.",
+@@ -59,8 +77,22 @@
+                         courseService.listCourses().stream().findFirst().get().getId())
+         );
+ 
++        this.lessonService.save(
++                new LessonDto("Lesson 100: Learn tricky words.",
++                        "their there their there their their their their there there there there their there",
++                        Status.NOT_STARTED,
++                        courseService.listCourses().stream().filter(course -> course.getCourseName().equals("Intermediate Course")).findFirst().get().getId())
++        );
++
++        this.lessonService.save(
++                new LessonDto("Lesson 200: Increase your typing speed",
++                        "their there their there their their their their there there there there their there",
++                        Status.NOT_STARTED,
++                        courseService.listCourses().stream().filter(course -> course.getCourseName().equals("Advanced Course")).findFirst().get().getId())
++        );
++
+         this.courseService.edit(courseService.listCourses().stream().findFirst().get().getId(),
+-                new CourseDto("BeginnerCourse",
++                new CourseDto("Beginner Course",
+                         "This is a course suitable for beginners.",
+                         "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
+                         Float.parseFloat("0.0"),
+@@ -70,5 +102,6 @@
+                 )
+         );
+ 
++
+     }
+ }
+Index: src/main/java/mk/ukim/finki/dnic/typingapp/domain/models/Course.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mk.ukim.finki.dnic.typingapp.domain.models;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonIgnore;\r\nimport com.fasterxml.jackson.annotation.JsonManagedReference;\r\nimport lombok.Data;\r\nimport mk.ukim.finki.dnic.typingapp.domain.enums.Level;\r\nimport mk.ukim.finki.dnic.typingapp.domain.identity.User;\r\n\r\nimport javax.persistence.*;\r\nimport java.util.List;\r\n\r\n@Data\r\n@Entity\r\npublic class Course {\r\n\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long id;\r\n\r\n    private String courseName;\r\n\r\n    private String description;\r\n\r\n    private String imageUrl;\r\n\r\n    private Float progress;\r\n\r\n    @Enumerated(EnumType.STRING)\r\n    private Level level;\r\n\r\n    @JsonManagedReference\r\n    @OneToMany(mappedBy = \"course\")\r\n    private List<Lesson> lessons;\r\n\r\n    @ManyToMany\r\n    private List<User> users;\r\n\r\n    public Course() {\r\n    }\r\n\r\n    public Course(String courseName, String description, String imageUrl, Float progress, Level level, List<Lesson> lessons, List<User> users) {\r\n        this.courseName = courseName;\r\n        this.description = description;\r\n        this.imageUrl = imageUrl;\r\n        this.progress = progress;\r\n        this.level = level;\r\n        this.lessons = lessons;\r\n        this.users = users;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/mk/ukim/finki/dnic/typingapp/domain/models/Course.java b/src/main/java/mk/ukim/finki/dnic/typingapp/domain/models/Course.java
+--- a/src/main/java/mk/ukim/finki/dnic/typingapp/domain/models/Course.java	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
++++ b/src/main/java/mk/ukim/finki/dnic/typingapp/domain/models/Course.java	(date 1661620910296)
+@@ -29,7 +29,7 @@
+     private Level level;
+ 
+     @JsonManagedReference
+-    @OneToMany(mappedBy = "course")
++    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
+     private List<Lesson> lessons;
+ 
+     @ManyToMany
+Index: src/main/java/mk/ukim/finki/dnic/typingapp/web/CourseController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mk.ukim.finki.dnic.typingapp.web;\r\n\r\nimport lombok.RequiredArgsConstructor;\r\nimport mk.ukim.finki.dnic.typingapp.domain.dto.CourseDto;\r\nimport mk.ukim.finki.dnic.typingapp.domain.models.Course;\r\nimport mk.ukim.finki.dnic.typingapp.service.CourseService;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\n@RequestMapping(\"/api/courses\")\r\n@RequiredArgsConstructor\r\npublic class CourseController {\r\n\r\n    private final CourseService courseService;\r\n\r\n    @GetMapping\r\n    public List<Course> getCourses(){\r\n        return this.courseService.listCourses();\r\n    }\r\n\r\n    @GetMapping(\"/{id}\")\r\n    public ResponseEntity<Course> findById(@PathVariable Long id) {\r\n        return this.courseService.findById(id)\r\n                .map(course -> ResponseEntity.ok().body(course))\r\n                .orElseGet(() -> ResponseEntity.notFound().build());\r\n    }\r\n\r\n    @PostMapping(\"/add\")\r\n    public ResponseEntity<Course> save(@RequestBody CourseDto courseDto) {\r\n        return this.courseService\r\n                .save(courseDto)\r\n                .map(course -> ResponseEntity.ok().body(course))\r\n                .orElseGet(() -> ResponseEntity.badRequest().build());\r\n    }\r\n\r\n    @PutMapping(\"/edit/{id}\")\r\n    public ResponseEntity<Course> save(@PathVariable Long id, @RequestBody CourseDto courseDto) {\r\n        return this.courseService.edit(id, courseDto)\r\n                .map(course -> ResponseEntity.ok().body(course))\r\n                .orElseGet(() -> ResponseEntity.badRequest().build());\r\n    }\r\n\r\n    @DeleteMapping(\"/delete/{id}\")\r\n    public ResponseEntity deleteById(@PathVariable Long id) {\r\n        this.courseService.delete(id);\r\n        if (this.courseService.findById(id).isEmpty())\r\n            return ResponseEntity.ok().build();\r\n        return ResponseEntity.badRequest().build();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/mk/ukim/finki/dnic/typingapp/web/CourseController.java b/src/main/java/mk/ukim/finki/dnic/typingapp/web/CourseController.java
+--- a/src/main/java/mk/ukim/finki/dnic/typingapp/web/CourseController.java	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
++++ b/src/main/java/mk/ukim/finki/dnic/typingapp/web/CourseController.java	(date 1661640212334)
+@@ -2,25 +2,34 @@
+ 
+ import lombok.RequiredArgsConstructor;
+ import mk.ukim.finki.dnic.typingapp.domain.dto.CourseDto;
++import mk.ukim.finki.dnic.typingapp.domain.identity.User;
+ import mk.ukim.finki.dnic.typingapp.domain.models.Course;
+ import mk.ukim.finki.dnic.typingapp.service.CourseService;
++import mk.ukim.finki.dnic.typingapp.service.UserService;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.web.bind.annotation.*;
+ 
+ import java.util.List;
+ 
+ @RestController
++@CrossOrigin("http://localhost:3000")
+ @RequestMapping("/api/courses")
+ @RequiredArgsConstructor
+ public class CourseController {
+ 
+     private final CourseService courseService;
++    private final UserService userService;
+ 
+     @GetMapping
+     public List<Course> getCourses(){
+         return this.courseService.listCourses();
+     }
+ 
++    @GetMapping("/user")
++    public User getUser() {
++        return userService.findUsers().stream().findFirst().get();
++    }
++
+     @GetMapping("/{id}")
+     public ResponseEntity<Course> findById(@PathVariable Long id) {
+         return this.courseService.findById(id)
+Index: src/main/java/mk/ukim/finki/dnic/typingapp/web/HomeController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mk.ukim.finki.dnic.typingapp.web;\r\n\r\nimport org.springframework.web.bind.annotation.RequestMapping;\r\nimport org.springframework.web.bind.annotation.RestController;\r\n\r\n@RestController\r\n@RequestMapping(value = {\"/\", \"/home\"})\r\npublic class HomeController {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/mk/ukim/finki/dnic/typingapp/web/HomeController.java b/src/main/java/mk/ukim/finki/dnic/typingapp/web/HomeController.java
+--- a/src/main/java/mk/ukim/finki/dnic/typingapp/web/HomeController.java	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
++++ b/src/main/java/mk/ukim/finki/dnic/typingapp/web/HomeController.java	(date 1661640212346)
+@@ -6,4 +6,5 @@
+ @RestController
+ @RequestMapping(value = {"/", "/home"})
+ public class HomeController {
++
+ }
+Index: src/main/java/mk/ukim/finki/dnic/typingapp/service/implementation/CourseServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mk.ukim.finki.dnic.typingapp.service.implementation;\r\n\r\nimport lombok.RequiredArgsConstructor;\r\nimport mk.ukim.finki.dnic.typingapp.domain.dto.CourseDto;\r\nimport mk.ukim.finki.dnic.typingapp.domain.models.Course;\r\nimport mk.ukim.finki.dnic.typingapp.repository.CourseRepository;\r\nimport mk.ukim.finki.dnic.typingapp.service.CourseService;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n@Service\r\n@RequiredArgsConstructor\r\npublic class CourseServiceImpl implements CourseService {\r\n\r\n    private final CourseRepository courseRepository;\r\n\r\n    @Override\r\n    public Optional<Course> save(CourseDto courseDto) {\r\n        courseRepository.deleteByCourseName(courseDto.getCourseName());\r\n\r\n        Course course = new Course(courseDto.getCourseName(),\r\n                courseDto.getDescription(),\r\n                courseDto.getImageUrl(),\r\n                courseDto.getProgress(),\r\n                courseDto.getLevel(),\r\n                courseDto.getLessons(),\r\n                courseDto.getUsers());\r\n        courseRepository.save(course);\r\n\r\n        return Optional.of(course);\r\n    }\r\n\r\n    @Override\r\n    public Optional<Course> edit(Long courseId, CourseDto courseDto) {\r\n        Course course = courseRepository\r\n                .findById(courseId)\r\n                .orElseThrow(() -> new IllegalArgumentException(\"Course doesn't exist\"));\r\n\r\n        course.setCourseName(courseDto.getCourseName());\r\n        course.setDescription(courseDto.getDescription());\r\n        course.setImageUrl(courseDto.getImageUrl());\r\n        course.setProgress(courseDto.getProgress());\r\n        course.setLevel(courseDto.getLevel());\r\n        course.setLessons(courseDto.getLessons());\r\n        course.setUsers(courseDto.getUsers());\r\n\r\n        courseRepository.save(course);\r\n\r\n        return Optional.of(course);\r\n\r\n    }\r\n\r\n    @Override\r\n    public void delete(Long courseId) {\r\n        courseRepository.deleteById(courseId);\r\n    }\r\n\r\n    @Override\r\n    public List<Course> listCourses() {\r\n        return courseRepository.findAll();\r\n    }\r\n\r\n    @Override\r\n    public Optional<Course> findById(Long id) {\r\n        return this.courseRepository.findById(id);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/mk/ukim/finki/dnic/typingapp/service/implementation/CourseServiceImpl.java b/src/main/java/mk/ukim/finki/dnic/typingapp/service/implementation/CourseServiceImpl.java
+--- a/src/main/java/mk/ukim/finki/dnic/typingapp/service/implementation/CourseServiceImpl.java	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
++++ b/src/main/java/mk/ukim/finki/dnic/typingapp/service/implementation/CourseServiceImpl.java	(date 1661620757036)
+@@ -59,7 +59,8 @@
+ 
+     @Override
+     public List<Course> listCourses() {
+-        return courseRepository.findAll();
++        List<Course> crses = courseRepository.findAll();
++        return crses;
+     }
+ 
+     @Override
+Index: src/main/java/mk/ukim/finki/dnic/typingapp/web/RegisterController.java
+===================================================================
+diff --git a/src/main/java/mk/ukim/finki/dnic/typingapp/web/RegisterController.java b/src/main/java/mk/ukim/finki/dnic/typingapp/web/RegisterController.java
+deleted file mode 100644
+--- a/src/main/java/mk/ukim/finki/dnic/typingapp/web/RegisterController.java	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
++++ /dev/null	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
+@@ -1,54 +0,0 @@
+-package mk.ukim.finki.dnic.typingapp.web;
+-
+-import mk.ukim.finki.dnic.typingapp.domain.enums.Role;
+-import mk.ukim.finki.dnic.typingapp.domain.exceptions.InvalidArgumentException;
+-import mk.ukim.finki.dnic.typingapp.domain.exceptions.PasswordsDoNotMatchException;
+-import mk.ukim.finki.dnic.typingapp.service.AuthenticationService;
+-import mk.ukim.finki.dnic.typingapp.service.UserService;
+-import org.springframework.stereotype.Controller;
+-import org.springframework.ui.Model;
+-import org.springframework.web.bind.annotation.GetMapping;
+-import org.springframework.web.bind.annotation.PostMapping;
+-import org.springframework.web.bind.annotation.RequestMapping;
+-import org.springframework.web.bind.annotation.RequestParam;
+-
+-@Controller
+-@RequestMapping("/register")
+-public class RegisterController {
+-    private final AuthenticationService authenticationService;
+-    private final UserService userService;
+-
+-    public RegisterController(AuthenticationService authenticationService, UserService userService) {
+-        this.authenticationService = authenticationService;
+-        this.userService = userService;
+-    }
+-
+-    @GetMapping
+-    public String getRegisterPage(@RequestParam(required = false) String error, Model model) {
+-        if (error != null && !error.isEmpty()) {
+-            model.addAttribute("hasErrors", error);
+-            model.addAttribute("error", error);
+-
+-        }
+-
+-        model.addAttribute("bodyContent", "register");
+-        return "master-template";
+-    }
+-
+-    @PostMapping
+-    public String register(@RequestParam String username,
+-                           @RequestParam String password,
+-                           @RequestParam String repeatPassword,
+-                           @RequestParam String name,
+-                           @RequestParam String surname,
+-                           @RequestParam String address,
+-                           @RequestParam Role role) {
+-        try {
+-            userService.register(username, password, repeatPassword, name, surname, address, role);
+-            return "redirect:/login";
+-        } catch (PasswordsDoNotMatchException | InvalidArgumentException e) {
+-            return "redirect:/register?error=" + e.getMessage();
+-        }
+-
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/mk/ukim/finki/dnic/typingapp/web/LoginController.java
+===================================================================
+diff --git a/src/main/java/mk/ukim/finki/dnic/typingapp/web/LoginController.java b/src/main/java/mk/ukim/finki/dnic/typingapp/web/LoginController.java
+deleted file mode 100644
+--- a/src/main/java/mk/ukim/finki/dnic/typingapp/web/LoginController.java	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
++++ /dev/null	(revision a460ebdbf4a09b3b5b0b7d169737c4c46f7d8620)
+@@ -1,4 +0,0 @@
+-package mk.ukim.finki.dnic.typingapp.web;
+-
+-public class LoginController {
+-}

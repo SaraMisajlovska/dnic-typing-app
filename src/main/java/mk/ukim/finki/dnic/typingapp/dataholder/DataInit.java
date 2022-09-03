@@ -1,13 +1,11 @@
 package mk.ukim.finki.dnic.typingapp.dataholder;
 
 import lombok.AllArgsConstructor;
-import mk.ukim.finki.dnic.typingapp.domain.dto.BadgeDto;
 import mk.ukim.finki.dnic.typingapp.domain.dto.CourseDto;
 import mk.ukim.finki.dnic.typingapp.domain.dto.LessonDto;
 import mk.ukim.finki.dnic.typingapp.domain.enums.Level;
 import mk.ukim.finki.dnic.typingapp.domain.enums.Role;
 import mk.ukim.finki.dnic.typingapp.domain.enums.Status;
-import mk.ukim.finki.dnic.typingapp.service.BadgeService;
 import mk.ukim.finki.dnic.typingapp.service.CourseService;
 import mk.ukim.finki.dnic.typingapp.service.LessonService;
 import mk.ukim.finki.dnic.typingapp.service.UserService;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -24,7 +21,6 @@ public class DataInit {
 
     private final CourseService courseService;
     private final LessonService lessonService;
-    private final BadgeService badgeService;
     private final UserService userService;
 
     @PostConstruct
