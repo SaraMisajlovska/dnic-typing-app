@@ -12,8 +12,5 @@ public class TypingAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(TypingAppApplication.class, args);
     }
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(10);
-    }
+
 }

@@ -30,24 +30,42 @@ public class DataInit {
     @PostConstruct
     public void initData() {
 
-        this.badgeService.save(
-                new BadgeDto("WelcomeBadge",
-                        "https://www.iconpacks.net/icons/1/free-badge-icon-1361-thumb.png",
-                        "This is your first badge. Welcome to the course!",
-                        new ArrayList<>()));
-        this.userService.register("saram",
-                "sm",
-                "sm",
-                "sara",
-                "misajlovska",
-                "vs bato",
+//        this.badgeService.save(
+//                new BadgeDto("WelcomeBadge",
+//                        "https://www.iconpacks.net/icons/1/free-badge-icon-1361-thumb.png",
+//                        "This is your first badge. Welcome to the course!",
+//                        new ArrayList<>()));
+        this.userService.register("sara.m",
+                "Sara",
+                "Misajlovska",
+                "saram@user.com",
+                "Skopje",
+                "Macedonia",
                 Role.USER);
         this.courseService.save(
-                new CourseDto("BeginnerCourse",
+                new CourseDto("Beginner Course",
                         "This is a course suitable for beginners.",
                         "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
                         Float.parseFloat("0.0"),
                         Level.LEVEL_1,
+                        new ArrayList<>(),
+                        List.of(this.userService.findUsers().stream().findFirst().get()))
+        );
+        this.courseService.save(
+                new CourseDto("Intermediate Course",
+                        "This is a course suitable for individuals who know their basics.",
+                        "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
+                        Float.parseFloat("0.0"),
+                        Level.LEVEL_2,
+                        new ArrayList<>(),
+                        List.of(this.userService.findUsers().stream().findFirst().get()))
+        );
+        this.courseService.save(
+                new CourseDto("Advanced Course",
+                        "This is a course suitable for skilled individuals",
+                        "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
+                        Float.parseFloat("0.0"),
+                        Level.LEVEL_3,
                         new ArrayList<>(),
                         List.of(this.userService.findUsers().stream().findFirst().get()))
         );
@@ -59,8 +77,22 @@ public class DataInit {
                         courseService.listCourses().stream().findFirst().get().getId())
         );
 
+        this.lessonService.save(
+                new LessonDto("Lesson 100: Learn tricky words.",
+                        "their there their there their their their their there there there there their there",
+                        Status.NOT_STARTED,
+                        courseService.listCourses().stream().filter(course -> course.getCourseName().equals("Intermediate Course")).findFirst().get().getId())
+        );
+
+        this.lessonService.save(
+                new LessonDto("Lesson 200: Increase your typing speed",
+                        "their there their there their their their their there there there there their there",
+                        Status.NOT_STARTED,
+                        courseService.listCourses().stream().filter(course -> course.getCourseName().equals("Advanced Course")).findFirst().get().getId())
+        );
+
         this.courseService.edit(courseService.listCourses().stream().findFirst().get().getId(),
-                new CourseDto("BeginnerCourse",
+                new CourseDto("Beginner Course",
                         "This is a course suitable for beginners.",
                         "https://static.typingclub.com/m/corp2/lessonplan-icons/typing-fr.png",
                         Float.parseFloat("0.0"),
@@ -69,6 +101,7 @@ public class DataInit {
                         List.of(this.userService.findUsers().stream().findFirst().get())
                 )
         );
+
 
     }
 }

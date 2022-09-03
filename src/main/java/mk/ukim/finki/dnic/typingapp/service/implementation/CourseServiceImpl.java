@@ -59,7 +59,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> listCourses() {
-        return courseRepository.findAll();
+        List<Course> crses = courseRepository.findAll();
+        return crses;
     }
 
     @Override

@@ -29,7 +29,7 @@ public class Course {
     private Level level;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private List<Lesson> lessons;
 
     @ManyToMany

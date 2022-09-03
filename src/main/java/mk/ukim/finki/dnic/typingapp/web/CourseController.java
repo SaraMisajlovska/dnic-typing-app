@@ -2,19 +2,23 @@ package mk.ukim.finki.dnic.typingapp.web;
 
 import lombok.RequiredArgsConstructor;
 import mk.ukim.finki.dnic.typingapp.domain.dto.CourseDto;
+import mk.ukim.finki.dnic.typingapp.domain.identity.User;
 import mk.ukim.finki.dnic.typingapp.domain.models.Course;
 import mk.ukim.finki.dnic.typingapp.service.CourseService;
+import mk.ukim.finki.dnic.typingapp.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
 public class CourseController {
 
     private final CourseService courseService;
+
 
     @GetMapping
     public List<Course> getCourses(){
