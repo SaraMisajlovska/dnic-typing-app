@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("https://typing-app-191517.herokuapp.com")
 @RequestMapping("/api/user")
 @AllArgsConstructor
 public class UserController {
